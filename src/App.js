@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Person from './components/Person/Person'
-import classes from './App.css'
+import classes from './App.module.css'
 import {
     nameChangedHandler,
     deletePersonHandler,
