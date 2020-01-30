@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import Person from './components/Person/Person'
-import { personHelper } from './components/Person/_helpers'
 import './App.css'
+import {
+    nameChangedHandler,
+    deletePersonHandler,
+    togglePersonsHandler,
+} from './components/Person/_helpers'
 
 class App extends Component {
     state = {
@@ -14,21 +18,16 @@ class App extends Component {
     }
     
     render () {
-        const {
-            nameChangedHandler,
-            deletePersonHandler,
-            togglePersonsHandler,
-        } = personHelper()
-        
-        const style = {
-            backgroundColor: 'white',
-            font: 'inherit',
-            border: '1px solid blue',
-            padding: '8px',
-        }
+        const style = {}
         
         let persons = null
         if (this.state.showPersons) {
+            style.backgroundColor = 'red'
+            style[':hover'] = {
+                backgroundColor: 'salmon',
+                color: 'black',
+            }
+            
             persons = (
                 <div>
                     {
@@ -46,13 +45,19 @@ class App extends Component {
             )
         }
         
+        const classes = []
+        if (this.state.persons.length <= 2) {
+            classes.push('red')
+        }
+        if (this.state.persons.length <= 1) {
+            classes.push('bold')
+        }
+        
         return (
             <div className="App">
                 <h1>Hi, I'm a React App</h1>
-                <button
-                    style={style}
-                    onClick={_ => togglePersonsHandler(this)}>Toggle Persons
-                </button>
+                <p className={classes.join(' ')}>Dit is een paragraaf</p>
+                <button className="button" onClick={_ => togglePersonsHandler(this)}>Toggle Persons</button>
                 
                 {persons}
             </div>

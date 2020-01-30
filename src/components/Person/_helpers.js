@@ -3,10 +3,10 @@
  * @param id
  * @param t
  */
-const nameChangedHandler = function (event, id, t) {
+export function nameChangedHandler(event, id, t) {
     const personIndex = t.state.persons.findIndex(p => p.id === id)
     const person = {...t.state.persons[personIndex]}
-
+    
     person.name = event.target.value
     const persons = [...t.state.persons]
     persons[personIndex] = person
@@ -17,7 +17,7 @@ const nameChangedHandler = function (event, id, t) {
  * @param personIndex
  * @param t
  */
-const deletePersonHandler = function (personIndex, t) {
+export function deletePersonHandler(personIndex, t) {
     const persons = [...t.state.persons]
     persons.splice(personIndex, 1)
     t.setState({persons})
@@ -26,17 +26,6 @@ const deletePersonHandler = function (personIndex, t) {
 /**
  * @param t
  */
-const togglePersonsHandler = function(t) {
+export function togglePersonsHandler(t) {
     t.setState({showPersons: !t.state.showPersons})
-}
-
-/**
- * @returns {{deletePersonHandler: deletePersonHandler, nameChangedHandler: nameChangedHandler, togglePersonsHandler: togglePersonsHandler}}
- */
-export function personHelper () {
-    return {
-        nameChangedHandler,
-        deletePersonHandler,
-        togglePersonsHandler
-    }
 }
