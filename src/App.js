@@ -1,38 +1,25 @@
 import React, { Component } from 'react'
 import Person from './components/Person/Person'
+import { personHelper } from './components/Person/_helpers'
 import './App.css'
 
 class App extends Component {
     state = {
         persons: [
-            {name: 'Rogier', age: 37},
-            {name: 'Ilse', age: 38},
-            {name: 'Marc', age: 39},
+            {id: '1', name: 'Rogier', age: 37},
+            {id: '2', name: 'Ilse', age: 38},
+            {id: '3', name: 'Marc', age: 39},
         ],
         showPersons: false,
     }
     
-    nameChangedHandler = event => {
-        this.setState({
-            persons: [
-                {name: 'Rogier', age: 27},
-                {name: event.target.value, age: 21},
-                {name: 'Marc', age: 39},
-            ],
-        })
-    }
-    
-    deletePersonHandler = (personIndex) => {
-        const persons = this.state.persons
-        persons.splice(personIndex, 1)
-        this.setState({persons: persons})
-    }
-    
-    togglePersonsHandler = () => {
-        this.setState({showPersons: !this.state.showPersons})
-    }
-    
     render () {
+        const {
+            nameChangedHandler,
+            deletePersonHandler,
+            togglePersonsHandler,
+        } = personHelper()
+        
         const style = {
             backgroundColor: 'white',
             font: 'inherit',
@@ -47,27 +34,14 @@ class App extends Component {
                     {
                         this.state.persons.map((person, index) => {
                             return <Person
+                                key={person.id}
                                 name={person.name}
                                 age={person.age}
-                                click={_ => this.deletePersonHandler(index)}
+                                changed={(event) => nameChangedHandler(event, person.id, this)}
+                                click={_ => deletePersonHandler(index, this)}
                             />
                         })
                     }
-                    
-                    {/*<Person*/}
-                    {/*    name={this.state.persons[0].name}*/}
-                    {/*    age={this.state.persons[0].age}*/}
-                    {/*/>*/}
-                    {/*<Person*/}
-                    {/*    name={this.state.persons[1].name}*/}
-                    {/*    age={this.state.persons[1].age}*/}
-                    {/*    click={_ => this.switchNameHandler('NAAM 2')}*/}
-                    {/*    changed={this.nameChangedHandler}*/}
-                    {/*>Child value</Person>*/}
-                    {/*<Person*/}
-                    {/*    name={this.state.persons[2].name}*/}
-                    {/*    age={this.state.persons[2].age}*/}
-                    {/*/>*/}
                 </div>
             )
         }
@@ -77,7 +51,7 @@ class App extends Component {
                 <h1>Hi, I'm a React App</h1>
                 <button
                     style={style}
-                    onClick={this.togglePersonsHandler}>Toggle Persons
+                    onClick={_ => togglePersonsHandler(this)}>Toggle Persons
                 </button>
                 
                 {persons}
