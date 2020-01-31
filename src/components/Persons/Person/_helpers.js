@@ -4,7 +4,7 @@
  * @param t
  */
 export function nameChangedHandler(event, id, t) {
-    const personIndex = t.state.persons.findIndex(p => p.id === id)
+    const personIndex = t.state.persons.findIndex(p => p.userId === id)
     const person = {...t.state.persons[personIndex]}
     
     person.name = event.target.value

@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
-import Person from './components/Person/Person'
 import classes from './App.module.css'
-import {
-    nameChangedHandler,
-    deletePersonHandler,
-    togglePersonsHandler,
-} from './components/Person/_helpers'
+import {togglePersonsHandler} from '../components/Persons/Person/_helpers'
+import Persons from '../components/Persons/Persons'
 
 class App extends Component {
     state = {
@@ -24,17 +20,7 @@ class App extends Component {
         if (this.state.showPersons) {
             persons = (
                 <div>
-                    {
-                        this.state.persons.map((person, index) => {
-                            return <Person
-                                key={person.id}
-                                name={person.name}
-                                age={person.age}
-                                changed={(event) => nameChangedHandler(event, person.id, this)}
-                                click={_ => deletePersonHandler(index, this)}
-                            />
-                        })
-                    }
+                    <Persons persons={this.state.persons} this={this}/>
                 </div>
             )
             
