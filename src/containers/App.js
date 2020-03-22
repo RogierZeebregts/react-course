@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import classes from './App.module.css'
 import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit'
+import withClass from '../hoc/withClass'
 
 class App extends Component {
     constructor (props) {
         super(props)
-        console.debug('[App.js] constructor')
+        console.log('[App.js] constructor')
     }
     
     state = {
@@ -17,24 +18,25 @@ class App extends Component {
         ],
         showPersons: false,
         showCockpit: true,
+        changeCounter: 0
     }
     
     static getDerivedStateFromProps (props, state) {
-        console.debug('[App.js] getDerivedStateFromProps', props)
+        console.log('[App.js] getDerivedStateFromProps', props)
         return state
     }
     
     componentDidMount () {
-        console.debug('[App.js] componentDidMount')
+        console.log('[App.js] componentDidMount')
     }
     
     shouldComponentUpdate (nextProps, nextState, nextContext) {
-        console.debug('[App.js] shouldComponentUpdate')
+        console.log('[App.js] shouldComponentUpdate')
         return true
     }
     
     componentDidUpdate (prevProps, prevState, snapshot) {
-        console.debug('[App.js] componentDidUpdate')
+        console.log('[App.js] componentDidUpdate')
     }
     
     deletePersonHandler = personIndex => {
@@ -50,7 +52,13 @@ class App extends Component {
         person.name = event.target.value
         const persons = [...this.state.persons]
         persons[personIndex] = person
-        this.setState({persons})
+        
+        this.setState((prevState, props) => {
+            return {
+                persons,
+                changeCounter: prevState.changeCounter + 1
+            }
+        })
     }
     
     togglePersonsHandler = () => {
@@ -58,7 +66,7 @@ class App extends Component {
     }
     
     render () {
-        console.debug('[App.js] render')
+        console.log('[App.js] render')
         let persons = null
         if (this.state.showPersons) {
             persons = (
@@ -73,7 +81,7 @@ class App extends Component {
         }
         
         return (
-            <div className={classes.App}>
+            <>
                 <br/>
                 <button onClick={_ => {this.setState({showCockpit: !this.state.showCockpit})}}>Toggle Cockpit</button>
                 {this.state.showCockpit ?
@@ -84,9 +92,9 @@ class App extends Component {
                         clicked={this.togglePersonsHandler}
                     /> : null}
                 {persons}
-            </div>
+            </>
         )
     }
 }
 
-export default App
+export default withClass(App, classes.App)

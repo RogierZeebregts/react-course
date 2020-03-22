@@ -1,23 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import classes from './Cockpit.module.css'
 
 const Cockpit = (props) => {
+    const toggleBtnRef = useRef(null)
+    
     useEffect(_ => {
-        console.debug('[Cockpit.js] useEffect')
-        const timer = setTimeout(_ => {
-            alert('d')
-        }, 1000)
+        console.log('[Cockpit.js] useEffect')
+        toggleBtnRef.current.click()
+        
+        // const timer = setTimeout(_ => {
+        //     alert('d')
+        // }, 1000)
         
         return _ => {
-            clearTimeout(timer)
-            console.debug('[Cockpit.js] cleanup work in useEffect')
+            // clearTimeout(timer)
+            console.log('[Cockpit.js] cleanup work in useEffect')
         }
     }, [])
     
     useEffect(_ => {
-        console.debug('[Cockpit.js] 2nd useEffect')
+        console.log('[Cockpit.js] 2nd useEffect')
         return _ => {
-            console.debug('[Cockpit.js] cleanup work in 2nd useEffect')
+            console.log('[Cockpit.js] cleanup work in 2nd useEffect')
         }
     })
     
@@ -38,7 +42,7 @@ const Cockpit = (props) => {
         <div className={classes.Cockpit}>
             <h1>{props.title}</h1>
             <p className={assignedClasses.join(' ')}>Dit is een paragraaf</p>
-            <button className={btnClass.join(' ')} onClick={props.clicked}>Toggle Persons</button>
+            <button ref={toggleBtnRef} className={btnClass.join(' ')} onClick={props.clicked}>Toggle Persons</button>
         </div>
     )
 }

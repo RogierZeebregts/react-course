@@ -1,34 +1,39 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import Person from './Person/Person'
 
-class Persons extends Component {
+class Persons extends PureComponent {
     // static getDerivedStateFromProps (props, state) {
-    //     console.debug('[Persons.js] getDerivedStateFromProps')
+    //     console.log('[Persons.js] getDerivedStateFromProps')
     //     return state
     // }
     
-    shouldComponentUpdate (nextProps, nextState) {
-        console.debug('[Persons.js] shouldComponentUpdate')
-        return nextProps.persons !== this.props.persons
-    }
+    // COMMENTED BECAUSE CHANGED TO PURECOMPONENT
+    // shouldComponentUpdate (nextProps, nextState) {
+    //     console.log('[Persons.js] shouldComponentUpdate')
+    //     return (
+    //         nextProps.persons !== this.props.persons
+    //         || nextProps.changed !== this.props.changed
+    //         || nextProps.clicked !== this.props.clicked
+    //     )
+    // }
     
     getSnapshotBeforeUpdate (prevProps, prevState) {
-        console.debug('[Persons.js] getSnapshotBeforeUpdate')
+        console.log('[Persons.js] getSnapshotBeforeUpdate')
         return {message: 'Snapshot!'}
     }
     
     componentDidUpdate (prevProps, prevState, snapshot) {
-        console.debug('[Persons.js] componentDidUpdate')
-        console.debug(snapshot)
+        console.log('[Persons.js] componentDidUpdate')
+        console.log(snapshot)
     }
     
     componentWillUnmount () {
-        console.debug('[Persons.js] componentWillUnmount')
+        console.log('[Persons.js] componentWillUnmount')
     }
     
     render () {
         return this.props.persons.map((person, index) => {
-            console.debug('[Persons.js] render')
+            console.log('[Persons.js] render')
             return <Person
                 key={person.id}
                 name={person.name}
