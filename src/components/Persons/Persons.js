@@ -6,7 +6,7 @@ class Persons extends PureComponent {
     //     console.log('[Persons.js] getDerivedStateFromProps')
     //     return state
     // }
-    
+
     // COMMENTED BECAUSE CHANGED TO PURECOMPONENT
     // shouldComponentUpdate (nextProps, nextState) {
     //     console.log('[Persons.js] shouldComponentUpdate')
@@ -16,21 +16,21 @@ class Persons extends PureComponent {
     //         || nextProps.clicked !== this.props.clicked
     //     )
     // }
-    
+
     getSnapshotBeforeUpdate (prevProps, prevState) {
         console.log('[Persons.js] getSnapshotBeforeUpdate')
         return {message: 'Snapshot!'}
     }
-    
+
     componentDidUpdate (prevProps, prevState, snapshot) {
         console.log('[Persons.js] componentDidUpdate')
         console.log(snapshot)
     }
-    
+
     componentWillUnmount () {
         console.log('[Persons.js] componentWillUnmount')
     }
-    
+
     render () {
         return this.props.persons.map((person, index) => {
             console.log('[Persons.js] render')

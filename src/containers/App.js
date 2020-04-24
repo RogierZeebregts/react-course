@@ -6,55 +6,55 @@ import withClass from '../hoc/withClass'
 import AuthContext from '../context/auth-context'
 
 class App extends Component {
-    constructor (props) {
+    constructor(props) {
         super(props)
         console.log('[App.js] constructor')
     }
-    
+
     state = {
         persons: [
-            {id: '1', name: 'Rogier', age: 37},
-            {id: '2', name: 'Ilse', age: 38},
-            {id: '3', name: 'Marc', age: 39},
+            { id: '1', name: 'Rogier', age: 37 },
+            { id: '2', name: 'Ilse', age: 38 },
+            { id: '3', name: 'Marc', age: 39 },
         ],
         showPersons: false,
         showCockpit: true,
         changeCounter: 0,
         authenticated: false,
     }
-    
-    static getDerivedStateFromProps (props, state) {
+
+    static getDerivedStateFromProps(props, state) {
         console.log('[App.js] getDerivedStateFromProps', props)
         return state
     }
-    
-    componentDidMount () {
+
+    componentDidMount() {
         console.log('[App.js] componentDidMount')
     }
-    
-    shouldComponentUpdate (nextProps, nextState, nextContext) {
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
         console.log('[App.js] shouldComponentUpdate')
         return true
     }
-    
-    componentDidUpdate (prevProps, prevState, snapshot) {
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
         console.log('[App.js] componentDidUpdate')
     }
-    
+
     deletePersonHandler = personIndex => {
         const persons = [...this.state.persons]
         persons.splice(personIndex, 1)
-        this.setState({persons})
+        this.setState({ persons })
     }
-    
+
     nameChangedHandler = (event, id) => {
         const personIndex = this.state.persons.findIndex(p => p.id === id)
-        const person = {...this.state.persons[personIndex]}
-        
+        const person = { ...this.state.persons[personIndex] }
+
         person.name = event.target.value
         const persons = [...this.state.persons]
         persons[personIndex] = person
-        
+
         this.setState((prevState, props) => {
             return {
                 persons,
@@ -62,16 +62,16 @@ class App extends Component {
             }
         })
     }
-    
+
     togglePersonsHandler = () => {
-        this.setState({showPersons: !this.state.showPersons})
+        this.setState({ showPersons: !this.state.showPersons })
     }
-    
+
     loginHandler = () => {
-        this.setState({authenticated: true})
+        this.setState({ authenticated: !this.state.authenticated })
     }
-    
-    render () {
+
+    render() {
         console.log('[App.js] render')
         let persons = null
         if (this.state.showPersons) {
@@ -81,20 +81,23 @@ class App extends Component {
                         persons={this.state.persons}
                         clicked={this.deletePersonHandler}
                         changed={this.nameChangedHandler}
-                        isAuthenticated={this.state.authenticated}
                     />
                 </>
             )
         }
-        
+
         return (
             <>
                 <br/>
-                <button onClick={_ => {this.setState({showCockpit: !this.state.showCockpit})}}>Toggle Cockpit</button>
+                <button onClick={_ => {
+                    this.setState({ showCockpit: !this.state.showCockpit })
+                }}>Toggle Cockpit
+                </button>
                 <AuthContext.Provider
                     value={{
                         authenticated: this.state.authenticated,
-                        login: this.loginHandler}}
+                        login: this.loginHandler
+                    }}
                 >
                     {this.state.showCockpit ?
                         <Cockpit
